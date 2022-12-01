@@ -27,5 +27,12 @@ fn main() {
     elves.sort();
 
     // Get the greatest object
-    println!("Part 1 Solution: {}",elves.last().unwrap());
+    println!("Part 1 Solution: {}", elves.last().unwrap());
+
+    // Get the last 3 elements
+    let length = elves.len();
+    let sum = elves[length-1] + elves[length-2] + elves[length-3];
+
+    println!("Part 2 Solution: {}", sum)
+
 }
