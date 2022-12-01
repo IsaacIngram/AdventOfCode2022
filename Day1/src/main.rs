@@ -27,5 +27,5 @@ fn main() {
     elves.sort();
 
     // Get the greatest object
-    println!("{}",elves.last().unwrap());
+    println!("Part 1 Solution: {}",elves.last().unwrap());
 }
