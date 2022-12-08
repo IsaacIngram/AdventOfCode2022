@@ -7,7 +7,7 @@ fn main() {
     let contents = fs::read_to_string(file_path).unwrap();
 
     // Counter for the sum of all priorities
-    let mut sum_of_priorities: i32 = 0;
+    let mut sum_of_priorities: u32 = 0;
 
     // Iterate through each rucksack
     for line in contents.split("\n") {
@@ -28,66 +28,44 @@ fn main() {
         }
     }
 
-    // Print the sum
+    // Print the sum for part 1
     println!("Part 1 solution: {}", sum_of_priorities);
+
+    // Reset the sum for part 2
+    sum_of_priorities = 0;
+
+    // Iterate through every 3 lines of the file
+    let lines: Vec<&str> = contents.split("\n").collect();
+    for i in (0..lines.len()-2).rev().step_by(3) {
+
+        // Declare the contents of the elf's rucksacks
+        let elf_1 = lines.get(i).unwrap();
+        let elf_2 = lines.get(i+1).unwrap();
+        let elf_3 = lines.get(i+2).unwrap();
+
+        // Iterate through all items in elf 1's rucksack
+        for item in elf_1.chars() {
+            // Check if the other two elves have the same item
+            if elf_2.contains(item) && elf_3.contains(item) {
+                // Increment the sum based on that items priority
+                sum_of_priorities += get_priority(item);
+                break;
+            }
+        }
+    }
+
+    // Print the output
+    println!("Part 2 solution: {}", sum_of_priorities);
 
 }
 
 /// Get the priority of a certain character
-fn get_priority(input: char) -> i32{
-    return match input {
-        'a' => 1,
-        'b' => 2,
-        'c' => 3,
-        'd' => 4,
-        'e' => 5,
-        'f' => 6,
-        'g' => 7,
-        'h' => 8,
-        'i' => 9,
-        'j' => 10,
-        'k' => 11,
-        'l' => 12,
-        'm' => 13,
-        'n' => 14,
-        'o' => 15,
-        'p' => 16,
-        'q' => 17,
-        'r' => 18,
-        's' => 19,
-        't' => 20,
-        'u' => 21,
-        'v' => 22,
-        'w' => 23,
-        'x' => 24,
-        'y' => 25,
-        'z' => 26,
-        'A' => 27,
-        'B' => 28,
-        'C' => 29,
-        'D' => 30,
-        'E' => 31,
-        'F' => 32,
-        'G' => 33,
-        'H' => 34,
-        'I' => 35,
-        'J' => 36,
-        'K' => 37,
-        'L' => 38,
-        'M' => 39,
-        'N' => 40,
-        'O' => 41,
-        'P' => 42,
-        'Q' => 43,
-        'R' => 44,
-        'S' => 45,
-        'T' => 46,
-        'U' => 47,
-        'V' => 48,
-        'W' => 49,
-        'X' => 50,
-        'Y' => 51,
-        'Z' => 52,
+fn get_priority(input: char) -> u32{
+    match input {
+        input if (input >= 'a' && input <= 'z') =>
+            u32::from(input) - u32::from('a') + 1,
+        input if (input >= 'A' && input <= 'Z') =>
+            u32::from(input) - u32::from('A') + 27,
         _ => 0
     }
 }
